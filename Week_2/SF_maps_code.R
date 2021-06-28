@@ -54,7 +54,8 @@ ggplot(my_states)+geom_sf()
 
 dummy_qual<- data.frame("STATEFP"=c("31","29","20","19"),qual=c(LETTERS[1:4]))
 
-######tip: you have to put quotation marks around the FIPS code when you create this dataframe, because the STATEFP column in my_states is a <chr> variable. the class of the two matching columns must be the same
+######tip: you have to put quotation marks around the FIPS code when you create this dataframe, because the STATEFP column in my_states is a <chr> variable. 
+######the class of the two matching columns must be the same
 
 my_states<- left_join(my_states,dummy_qual,by="STATEFP")
 

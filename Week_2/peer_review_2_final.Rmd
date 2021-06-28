@@ -3,7 +3,7 @@ title: "Spatial Figures Peer Review"
 output: html_document
 ---
 
-## PUT YOUR NAME HERE: Marcio Woitek
+## PUT YOUR NAME HERE: Thomas J James
 
 ```{r setup, include=FALSE}
 suppressPackageStartupMessages(library(tidyverse))

@@ -1,0 +1,122 @@
+---
+title: "Animations and Interactivity"
+output: html_document
+---
+
+# Thomas J James
+
+## Problem 1
+
+```{r problem_1_data,include=FALSE}
+
+#####DO NOT MODIFY THIS CHUNK
+library(tidyverse)
+
+Category<-c("Alpha","Beta","Zeta")
+City<-c("Hong Kong","London","Nairobi")
+
+my_dat<-expand_grid(Category,City)
+
+set.seed(84684)
+
+my_dat$Value<-sample(1:10,9,replace=T)
+```
+
+```{r problem_1_solution,echo=FALSE,message=FALSE}
+
+library(gganimate)
+library(gifski)
+```
+
+```{r problem_1, echo=FALSE, message=FALSE}
+ggplot2::ggplot(
+    data = my_dat,
+    mapping = ggplot2::aes(
+        x = Category,
+        y = Value,
+        fill = City
+    )) +
+    ggplot2::geom_col() +
+    gganimate::transition_states(
+        states = City,
+        state_length = 2
+    ) +
+    gganimate::enter_fade() +
+    gganimate::exit_fade()
+```
+
+
+
+## Problem 2
+
+```{r problem_2_data,include=FALSE}
+
+#####DO NOT MODIFY THIS CHUNK
+
+Response<-c("Energize","Amazing","Great")
+set.seed(9819)
+Energize<-tibble(Company=rep("Energize",100),Output=rnorm(100,50,20))
+set.seed(9819)
+Amazing<-tibble(Company=rep("Amazing",100),Output=rnorm(100,50,10))
+set.seed(9819)
+Great<-tibble(Company=rep("Great",100),Output=rnorm(100,40,5))
+
+my_dat<-bind_rows(Energize,Amazing,Great)
+```
+
+
+```{r problem_2, echo=FALSE, message=FALSE, warning=FALSE}
+# Create the `ggplot` figure:
+gg_figure <- ggplot2::ggplot(
+    data = my_dat,
+    mapping = ggplot2::aes(
+        x = Company,
+        y = Output,
+        fill = Company
+    )) +
+    ggplot2::geom_boxplot()
+# Create the interactive figure using `plotly`:
+plotly::ggplotly(gg_figure)
+```
+
+## Problem 3
+
+```{r problem_3_data,echo=FALSE,message=FALSE,warning=FALSE}
+
+library(plotly)
+
+Category<-seq(from=1,to=10)
+Time<-seq(from=1,to=10)
+
+dat3<-expand_grid(Category,Time)
+
+set.seed(78957)
+dat3$Quantity<-runif(100,0,10)
+```
+
+
+```{r problem_3_solution,echo=FALSE,message=FALSE,warning=FALSE}
+
+library(plotly)
+
+plotly::ggplotly(
+    ggplot2::ggplot(
+        mapping = ggplot2::aes(frame = Time)) +
+        ggplot2::geom_point(
+            data = dat3,
+            mapping = ggplot2::aes(
+                x = Category,
+                y = Quantity
+            )) +
+        ggplot2::geom_segment(
+            data = dat3,
+            mapping = ggplot2::aes(
+                x = Category,
+                xend = Category,
+                y = 0,
+                yend = Quantity
+            )) +
+        ggplot2::theme(
+            axis.text.x = ggplot2::element_text(angle = 90)
+        ))
+```
